@@ -1,0 +1,7 @@
+{
+  "name": "araport-geneslider",
+  "private": true,
+  "dependencies": {
+    "GeneSlider_Bower_Package": "https://github.com/asherpasha/GeneSlider_Bower_Package.git"
+  }
+}
