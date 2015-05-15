@@ -10,11 +10,11 @@
 	function loadPDE() {
 		var allScripts, i, re, pdeURL;
 		allScripts = document.querySelectorAll('script');
-		re = /^(.*)(\/araport_bower_test[^\/]*)\/(.*)hello\.js??(.*)?$/;
+		re = /^(.*)(\/geneslider_bower_package[^\/]*)\/(.*)GeneSlider\.js??(.*)?$/;
 		for (i = 0; i < allScripts.length && ! pdeURL; i++) {
 		 	if (re.test(allScripts[i].src)) {	  
 				var match = re.exec(allScripts[i].src);
-				pdeURL = match[1] + match[2] + '/app.pde';
+				pdeURL = match[1] + match[2] + '/GeneSlider.pde';
 			}
 		}
 
