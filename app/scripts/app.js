@@ -10,7 +10,7 @@
 	function loadPDE() {
 		var allScripts, i, re, pdeURL;
 		allScripts = document.querySelectorAll('script');
-		re = /^(.*)(\/geneslider_bower_package[^\/]*)\/(.*)geneSlider\.js??(.*)?$/;
+		re = /^(.*)(\/geneslider_bower_package[^\/]*)\/(.*)GeneSlider\.pde??(.*)?$/;
 		for (i = 0; i < allScripts.length && ! pdeURL; i++) {
 		 	if (re.test(allScripts[i].src)) {	  
 				var match = re.exec(allScripts[i].src);
