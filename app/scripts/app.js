@@ -8,6 +8,7 @@
 	var bound;	// If Processing is bound
 	var jsonClone;	// This will have data for gff
 	var search;	// The JSON object for search
+	var Agave;	// The Agave API!
 
 	// Functions
 
@@ -44,7 +45,6 @@
 
 	// Load an AGI into GeneSlider
 	function agiLoader(agi, before, after, zoomFrom, zoomTo, Bitscore, alnIndicator) {
-		var Agave = window.Agave;
 		var query;
 		var response;
 	
@@ -55,8 +55,6 @@
 				pjs.bindJavascript(this);
 				bound = true;
 
-				window.alert('pjs defined!');
-	
 				// Runs the webservice that fetches data using AGI
 				function addData() {
 					query = {
@@ -128,24 +126,29 @@
 		bind();
 	}
 
-	$(document).ready(function() {
-		// Variable
-		var agi = 'At1g01010';
-		var before = 1000;
-		var after = 1000;
-		var zoomFrom = -1;
-		var zoomTo = -1;
-		var weightedBitscore = 'true';
-		var alnIndicator = 'true';
+	window.addEventListener('Agave::ready', function() {
+		// Define Agave API
+		Agave = window.Agave;
+			
+		$(document).ready(function() {
+			// Variable
+			var agi = 'At1g01010';
+			var before = 1000;
+			var after = 1000;
+			var zoomFrom = -1;
+			var zoomTo = -1;
+			var weightedBitscore = 'true';
+			var alnIndicator = 'true';
 
-		// Run the script
-		loadPDE();
+			// Run the script
+			loadPDE();
 
-		// Bind
-		bindjs();
+			// Bind
+			bindjs();
 
-		// Load AGI
-		agiLoader(agi, parseInt(before, 10), parseInt(after, 10), parseInt(zoomFrom, 10), parseInt(zoomTo, 10), weightedBitscore, alnIndicator);
-	});
+			// Load AGI
+			agiLoader(agi, parseInt(before, 10), parseInt(after, 10), parseInt(zoomFrom, 10), parseInt(zoomTo, 10), weightedBitscore, alnIndicator);
+		});
+	}
 
 })(window, jQuery, Processing);
