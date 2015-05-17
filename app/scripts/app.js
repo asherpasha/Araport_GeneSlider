@@ -149,6 +149,6 @@
 			// Load AGI
 			agiLoader(agi, parseInt(before, 10), parseInt(after, 10), parseInt(zoomFrom, 10), parseInt(zoomTo, 10), weightedBitscore, alnIndicator);
 		});
-	}
+	});
 
 })(window, jQuery, Processing);
