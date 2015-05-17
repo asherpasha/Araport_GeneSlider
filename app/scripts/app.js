@@ -42,22 +42,27 @@
 		}
 	}
 
-
 	// Load an AGI into GeneSlider
 	function agiLoader(agi, before, after, zoomFrom, zoomTo, Bitscore, alnIndicator) {
 		var Agave = window.Agave;
 		var query;
 		var response;
+		window.alert('In agiLoader');
+		window.alert(bound);
 	
 		function bind() {
 			pjs = Processing.getInstanceById('araport-geneslider-canvas');
-		
+			
+			window.alert('In bind');
 			if (pjs !== null) {
 				pjs.bindJavascript(this);
 				bound = true;
+
+				window.alert('pjs defined!');
 	
 				// Runs the webservice that fetches data using AGI
 				function addData() {
+					window.alert('in addData')
 					query = {
 						locus: agi,
 						before: before,
@@ -72,6 +77,8 @@
 							window.alert('Error in backend webservice!');
 							return;
 						}
+
+						window.alert('in reponse');
 
 						// Check for error from webservice
 						if (response.obj.status === 'failed') {
@@ -99,7 +106,6 @@
 								pjs.setEndDigit(zoomTo);
 							}
 	
-							
 							pjs.setgffPanelOpen(true);
 							pjs.setFastaData(response.obj.result.fileData);
 							
@@ -136,7 +142,6 @@
 		var zoomTo = -1;
 		var weightedBitscore = 'true';
 		var alnIndicator = 'true';
-
 
 		// Run the script
 		loadPDE();
