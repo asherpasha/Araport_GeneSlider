@@ -33,12 +33,12 @@
 	// Bind processing
 	function bindjs() {
 		pjs = Processing.getInstanceById('araport-geneslider-canvas');
-		if (pjs !== null) {
+		if (pjs) {
 			pjs.bindJavascript(this);
 			bound = true;
 		}
 		if (!bound) { 
-			setTimeout(bindjs, 250);
+			setTimeout(bindjs, 1000);
 		}
 	}
 
@@ -54,7 +54,7 @@
 			pjs = Processing.getInstanceById('araport-geneslider-canvas');
 			
 			window.alert('In bind');
-			if (pjs !== null) {
+			if (pjs) {
 				pjs.bindJavascript(this);
 				bound = true;
 
