@@ -8,7 +8,6 @@
 	var bound;	// If Processing is bound
 	var jsonClone;	// This will have data for gff
 	var search;	// The JSON object for search
-	var Agave;	// The Agave API!
 
 	// Functions
 
@@ -63,7 +62,7 @@
 						after: after
 					};
 
-					Agave.api.adama.search({
+					window.Agave.api.adama.search({
 						'namespace':'asher', 'service':'araport_geneslider_alignmentbyagi_v0.1.0', 'queryParams': query
 					}, function(reponse) {
 						// Check for server errors
@@ -126,29 +125,25 @@
 		bind();
 	}
 
+	// Run the script
+	loadPDE();
+
+	// Bind
+	bindjs();
+
 	window.addEventListener('Agave::ready', function() {
-		// Define Agave API
-		Agave = window.Agave;
 			
-		$(document).ready(function() {
-			// Variable
-			var agi = 'At1g01010';
-			var before = 1000;
-			var after = 1000;
-			var zoomFrom = -1;
-			var zoomTo = -1;
-			var weightedBitscore = 'true';
-			var alnIndicator = 'true';
+		// Variable
+		var agi = 'At1g01010';
+		var before = 1000;
+		var after = 1000;
+		var zoomFrom = -1;
+		var zoomTo = -1;
+		var weightedBitscore = 'true';
+		var alnIndicator = 'true';
 
-			// Run the script
-			loadPDE();
-
-			// Bind
-			bindjs();
-
-			// Load AGI
-			agiLoader(agi, parseInt(before, 10), parseInt(after, 10), parseInt(zoomFrom, 10), parseInt(zoomTo, 10), weightedBitscore, alnIndicator);
-		});
+		// Load AGI
+		agiLoader(agi, parseInt(before, 10), parseInt(after, 10), parseInt(zoomFrom, 10), parseInt(zoomTo, 10), weightedBitscore, alnIndicator);
 	});
 
 })(window, jQuery, Processing);
