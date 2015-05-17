@@ -47,13 +47,10 @@
 		var Agave = window.Agave;
 		var query;
 		var response;
-		window.alert('In agiLoader');
-		window.alert(bound);
 	
 		function bind() {
 			pjs = Processing.getInstanceById('araport-geneslider-canvas');
 			
-			window.alert('In bind');
 			if (pjs) {
 				pjs.bindJavascript(this);
 				bound = true;
@@ -62,7 +59,6 @@
 	
 				// Runs the webservice that fetches data using AGI
 				function addData() {
-					window.alert('in addData')
 					query = {
 						locus: agi,
 						before: before,
@@ -70,7 +66,7 @@
 					};
 
 					Agave.api.adama.search({
-						'namespace':'asher', 'service':'araport_geneslider_alignmentbyagi_v0.1.0', 'queryParam': query
+						'namespace':'asher', 'service':'araport_geneslider_alignmentbyagi_v0.1.0', 'queryParams': query
 					}, function(reponse) {
 						// Check for server errors
 						if (response.status !== 200) {
@@ -78,7 +74,6 @@
 							return;
 						}
 
-						window.alert('in reponse');
 
 						// Check for error from webservice
 						if (response.obj.status === 'failed') {
