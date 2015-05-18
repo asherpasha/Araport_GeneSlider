@@ -1,4 +1,5 @@
 /*globals Processing*/
+var jsonClone;	// This will have data for gff
 (function(window, $, Processing, undefined) {
 	'use strict';
 	
@@ -6,7 +7,6 @@
 	//var appContext = $('[data-app-name="araport-geneslider"]');
 	var pjs;	// Processing js object
 	var bound;	// If Processing is bound
-	var jsonClone;	// This will have data for gff
 	var search;	// The JSON object for search
 
 	// Functions
