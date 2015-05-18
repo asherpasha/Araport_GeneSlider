@@ -64,7 +64,7 @@
 
 					window.Agave.api.adama.search({
 						'namespace':'asher', 'service':'araport_geneslider_alignmentbyagi_v0.1.0', 'queryParams': query
-					}, function(reponse) {
+					}, function(response) {
 						// Check for server errors
 						if (response.status !== 200) {
 							window.alert('Error in backend webservice!');
