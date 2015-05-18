@@ -78,8 +78,8 @@
 							return;
 						}
 
-						jsonClone = JSON.parse(JSON.stringify(reponse.obj.result));
-						if (reponse.obj.result.fileData !== '') {
+						jsonClone = JSON.parse(JSON.stringify(response.obj.result));
+						if (response.obj.result.fileData !== '') {
 							pjs.resetData();
 							pjs.setAlnStart(response.obj.result.start);
 							pjs.setSessionData('CNSData', agi, before, after, Bitscore, alnIndicator);
