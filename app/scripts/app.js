@@ -8,9 +8,11 @@ var jsonClone;	// This will have data for gff
 	var pjs;	// Processing js object
 	var bound;	// If Processing is bound
 	var search;	// The JSON object for search
+	var ready = false;	// Is the system ready
+	var before = 0;	// Upstream
+	var after = 0;	// Downstream
 
 	// Functions
-
 	// Load the GeneSlider pde file
 	function loadPDE() {
 		var allScripts, i, re, pdeURL;
@@ -49,59 +51,56 @@ var jsonClone;	// This will have data for gff
 	
 		function bind() {
 			pjs = Processing.getInstanceById('araport-geneslider-canvas');
-			
-			if (pjs) {
-				pjs.bindJavascript(this);
-				bound = true;
 
-				// Runs the webservice that fetches data using AGI
-				function addData() {
-					query = {
-						locus: agi,
-						before: before,
-						after: after
-					};
+			// Runs the webservice that fetches data using AGI
+			function addData() {
+				query = {
+					locus: agi,
+					before: before,
+					after: after
+				};
 
-					window.Agave.api.adama.search({
-						'namespace':'asher', 'service':'araport_geneslider_alignmentbyagi_v0.1.0', 'queryParams': query
-					}, function(response) {
-						// Check for server errors
-						if (response.status !== 200) {
-							window.alert('Error in backend webservice!');
-							return;
+				window.Agave.api.adama.search({
+					'namespace':'asher', 'service':'araport_geneslider_alignmentbyagi_v0.1.0', 'queryParams': query
+				}, function(response) {
+					// Check for server errors
+					if (response.status !== 200) {
+						window.alert('Error in backend webservice!');
+						return;
+					}
+
+
+					// Check for error from webservice
+					if (response.obj.status === 'failed') {
+						window.alert('An error returned by webservice!');
+						return;
+					}
+
+					jsonClone = JSON.parse(JSON.stringify(response.obj.result));
+					if (response.obj.result.fileData !== '') {
+						pjs.resetData();
+						pjs.setAlnStart(response.obj.result.start);
+						pjs.setSessionData('CNSData', agi, before, after, Bitscore, alnIndicator);
+	
+						// Set the start digit
+						if (zoomFrom < 0) {
+							pjs.setStartDigit(before);
+						} else {
+							pjs.setStartDigit(zoomFrom);
 						}
-
-
-						// Check for error from webservice
-						if (response.obj.status === 'failed') {
-							window.alert('An error returned by webservice!');
-							return;
+	
+						// Set the end digit
+						if (zoomTo < 0) {
+							pjs.setEndDigit(before + 20);
+						} else {
+							pjs.setEndDigit(zoomTo);
 						}
-
-						jsonClone = JSON.parse(JSON.stringify(response.obj.result));
-						if (response.obj.result.fileData !== '') {
-							pjs.resetData();
-							pjs.setAlnStart(response.obj.result.start);
-							pjs.setSessionData('CNSData', agi, before, after, Bitscore, alnIndicator);
 	
-							// Set the start digit
-							if (zoomFrom < 0) {
-								pjs.setStartDigit(before);
-							} else {
-								pjs.setStartDigit(zoomFrom);
-							}
-	
-							// Set the end digit
-							if (zoomTo < 0) {
-								pjs.setEndDigit(before + 20);
-							} else {
-								pjs.setEndDigit(zoomTo);
-							}
-	
-							pjs.setgffPanelOpen(true);
-							pjs.setFastaData(response.obj.result.fileData);
-							
-							// Set the search query
+						pjs.setgffPanelOpen(true);
+						pjs.setFastaData(response.obj.result.fileData);
+						
+						// Set the search query
+						if (search) {
 							if (search.length > 0 && search.length < 7) {
 								for (var i = 0; i < search.length; i++) {
 									for (var j = 0; j < search[i].length; j++) {
@@ -112,10 +111,16 @@ var jsonClone;	// This will have data for gff
 									}
 								}
 							}
-							setTimeout(pjs.updateURLSearchResults, 100);	
 						}
-					});
-				}
+						setTimeout(pjs.updateURLSearchResults, 100);	
+					}
+				});
+			}
+
+			if (pjs) {
+				pjs.bindJavascript(this);
+				bound = true;
+
 				addData();
 			}
 			if (!bound) {
@@ -125,25 +130,47 @@ var jsonClone;	// This will have data for gff
 		bind();
 	}
 
-	// Run the script
-	loadPDE();
-
-	// Bind
-	bindjs();
-
-	window.addEventListener('Agave::ready', function() {
-			
+	// Load data
+	function loadDataFromGoButton() {
 		// Variable
-		var agi = 'At1g01010';
-		var before = 1000;
-		var after = 1000;
+		var agi = $('#araport-geneslider-user_agi').val();
 		var zoomFrom = -1;
 		var zoomTo = -1;
 		var weightedBitscore = 'true';
 		var alnIndicator = 'true';
 
 		// Load AGI
-		agiLoader(agi, parseInt(before, 10), parseInt(after, 10), parseInt(zoomFrom, 10), parseInt(zoomTo, 10), weightedBitscore, alnIndicator);
+		if (ready) {
+			agiLoader(agi, parseInt(before, 10), parseInt(after, 10), parseInt(zoomFrom, 10), parseInt(zoomTo, 10), weightedBitscore, alnIndicator);
+		} else {
+			alert('Agave not ready. Please try again.');
+		}
+	}
+
+
+	// Run the script
+	loadPDE();
+
+	// Bind
+	bindjs();
+
+
+	window.addEventListener('Agave::ready', function() {
+		ready = true;	// Agave ready
+		$(document).ready(function() {
+			$(document).on('click', '#araport-geneslider-go', loadDataFromGoButton);
+			$('#araport-geneslider-afterSlider').change(function() {
+				var newVal = this.value;
+		    	document.getElementById('araport-geneslider-afterlabel').innerHTML='After ('+newVal+')';
+				after = Math.abs(newVal);
+			});
+
+			$('#araport-geneslider-beforeSlider').change(function() {
+				var newVal = this.value;
+		    	document.getElementById('araport-geneslider-beforelabel').innerHTML='Before ('+newVal+')';
+				before = Math.abs(newVal);		
+			});
+		});
 	});
 
 })(window, jQuery, Processing);
