@@ -261,7 +261,6 @@ var jsonClone;	// This will have data for gff
 	// Bind
 	bindjs();
 
-
 	window.addEventListener('Agave::ready', function() {
 		ready = true;	// Agave ready
 		$(document).ready(function() {
@@ -283,6 +282,11 @@ var jsonClone;	// This will have data for gff
 			});
 
 			// FASTA file upload
+			// Decoy button clicked
+			$(document).on('click','#araport-geneslider-file', function() {
+				$('#araport-geneslider-fileUpload').click();
+			});
+			// Real file upload function
 			$('#araport-geneslider-fileUpload').change(function () {
 			    if ($('#araport-geneslider-fileUpload').val() === '') {
         			return;
@@ -290,12 +294,22 @@ var jsonClone;	// This will have data for gff
 				readFile(this);
     			$('#araport-geneslider-fileUpload').val('');
 			});
-			
-			// About
-			$(document).on('click', '#araport-geneslider-about', function() {
-				window.alert('Araport GeneSlider was developed by the BAR team with support from the Araport team. GeneSlider is funded by Genome Canada.');
+
+			//Go upstream by 1K bp
+			$(document).on('click', '#araport-geneslider-loadUpstream', function() {
+				if ($('#araport-geneslider-user_agi').val()) {
+					before = before + 1000;
+					$('#araport-geneslider-go').click();
+				}
+			});
+
+			// Go downstream by 1K bp
+			$(document).on('click', '#araport-geneslider-loadDownstream', function() {
+				if ($('#araport-geneslider-user_agi').val()) {
+					after = after + 1000;
+					$('#araport-geneslider-go').click();
+				}
 			});
 		});
 	});
-
 })(window, jQuery, Processing);

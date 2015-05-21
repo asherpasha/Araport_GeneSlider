@@ -1,20 +1,11 @@
 <div class="science-app" data-app-name="araport-geneslider">
-	<h1>
-		<img src="http://bar.utoronto.ca/ntools/bbc_logo_small.gif" alt="BAR logo">
-		GeneSlider
-	</h1>
+       <!-- ///////////////////////////////////////////////////////////////////// -->
         <!-- Load a Gene Section -->
         <div id="araport-geneslider-loadDataBox" class="text-center">
             <div class="col-lg-12">
+                <!-- Enter AGI ID box -->
                 <h2>Select an <i>Arabidopsis</i> gene to view conserved regions across species:</h2>
-
-				<!-- file upload -->
-				<div>
-				<input type="button" id="araport-geneslider-about" value="About">
-                Upload file<input id="araport-geneslider-fileUpload" type="file">
-                </div>
-
-                <div class="row">
+                <div class="row" style="margin-bottom:20px;">
                     <!-- left col -->
                     <div class="col-md-2"></div>
 
@@ -67,19 +58,105 @@
                               </div>
 
 	                      </div>
-					</div>					
+				            </div>					
                     <!-- right col -->
                     <div class="col-md-2"></div>
-				</div>    
-				<div class="row">
-					<div class="col-md-8">
-						<!-- This is for Desktop version -->
-						<canvas id="araport-geneslider-canvas" data-processing-sources="../bower_components/GeneSlider_Bower_Package/GeneSlider.pde" ></canvas>	
-						<!-- This is for Araport Live version
-						<canvas id="araport-geneslider-canvas"></canvas>							
+				          </div> 
+                </div>   
+
+                <!-- upload file & aboout buttons -->
+                <div>
+                    <span class="btn btn-default btn-sm" id="araport-geneslider-loadUpstream">+1000 Bases Upstream</span>
+                    <span class="btn btn-default btn-sm" id="araport-geneslider-about" data-toggle="modal" data-target="#aboutModal">About</span>
+                    <span class="btn btn-default btn-sm" id="araport-geneslider-contact" data-toggle="modal" data-target="#contactModal">Contact</span>
+                    <span class="btn btn-default btn-sm" id="araport-geneslider-file" >Upload Your Own FASTA File</span>
+					<input type="file" id="araport-geneslider-fileUpload" style="display: none;" >
+                    <span class="btn btn-default btn-sm" id="araport-geneslider-loadDownstream">+1000 Bases Downstream</span>
+                </div>
+          </div>
+
+
+          <!-- ///////////////////////////////////////////////////////////////////// -->
+          <!-- Visualization Window -->
+  				<div class="row">
+  					<div class="col-md-8">
+  						<!-- This is for Desktop version 
+  						<canvas id="araport-geneslider-canvas" data-processing-sources="../bower_components/GeneSlider_Bower_Package/GeneSlider.pde"></canvas>	
 						-->
-					</div>
-				</div>
-            </div>
-		</div>
+  						<!-- This is for Araport Live version -->
+  						<canvas id="araport-geneslider-canvas"></canvas>							
+  					</div>
+  				</div>
+
+
+          <!-- ///////////////////////////////////////////////////////////////////// -->
+          <!-- About Modal -->
+          <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="About button" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                          <h1><a href="http://bar.utoronto.ca"><img src="http://bar.utoronto.ca/~jwaese/GeneSlider/images/barLogo.png" style="margin-right:10px" alt="BAR logo"></a>GeneSlider</h1>
+                      </div>
+
+                      <div class="modal-body" id="aboutBody">
+                          <p>Sequence logos are a well known bioinformatic data visualization paradigm for displaying conservation and entropy in aligned sequences (Schneider and Stephens 1990). Each of the residues in a sequence are represented by a series of stacked characters in which the height the stack signifies the information content for that position, and the height of the characters signifies the frequency of that residue.</p>
+
+                          <p>Traditionally, sequence logos are generated with tools such as WebLogo (Crooks et al. 2004) and Seq2Logo (Thomsen and Nielsen 2012, 2) in which any sequence beyond 30 or so bases must be broken into separate rows. This makes it difficult to identify motifs that span multiple rows because the visual disconnect of a line break interferes with our ability to recognize elements based on preattentive visual features such as size, density, and number (Healey and Enns 2012). A new web tool called Skylign (Wheeler, Clements, and Finn 2014) addresses this problem by generating long sequence logos that can be zoomed in and out of, however it is still difficult to recognize amino acid motifs when there is “wobble” in one or more of the bases because it is inherently difficult to distinguish targets of interest from a set of distracters (Quinlan and Humphreys 1987).</p>
+
+                          <p>Gene Slider addresses these challenges by combining the ability to make long sequence logos with a search panel that automatically highlights motifs of interest, even when there is a high degree of wobble. Slider controls for each position of a search query assign certainty thresholds to control whether the search function will recognize partially conserved matches. A navigation slider at the bottom of the screen indicates which region of the sequence is currently being displayed. Colored markers along this slider indicate where query motifs have been identified, making it easy to see where multiple matches have been found. Figure 1 shows a portion of an alignment in which there is only one occurrence of the motif AAACA. Without the search function it would be challenging to find this motif because of the entropy in positions 3 and 4 of the match.</p>
+
+                          <figure style="margin-bottom:20px;">
+                          <img src="http://bar.utoronto.ca/~jwaese/GeneSlider/images/Figure1.png" style="width:100%;">
+                          <figcaption>Fig. 1. The motif AAACA is highlighted according to the query in the search panel. The horizontal bar superimposed over each column represents the number of sequences with a residue at that position.</figcaption>
+                          </figure>
+
+                          <p>In addition to displaying locally stored FASTA files, Gene Slider includes a data loader for downloading CNS alignments along with the TAIR10 annotations for each known gene element in that data. One of the main challenges in XXXXXXXX is XXXXXXXXX. Gene Slider addresses this problem by XXXXXXXXXX.– NICK?.</p>
+
+                          <p>
+                          Gene Slider loads FASTA formatted aligned sequences into a large matrix and then counts the frequency of each base per column. Bit scores for each base are calculated according to Schneider & Stephens’s (1990) application of the Shannon entropy formula, where:</p>
+                          <p style="text-align:center;"><img src="http://bar.utoronto.ca/~jwaese/GeneSlider/images/shannons-formula-small.jpg" style="width:40%;">
+                          </p>
+
+                          <p>
+                          Individual bit scores are then summed to make a total bit score for the column. Objects that contain symbols that are scaled according to the frequency of residues found in each column are then created, stored in a new array, and then drawn to the screen according to the start and end points of the user’s current view settings. </p>
+                          
+                          <p>The usual Shannon logo can be misleading because column heights do not take insertion and deletion events into account. A base that is only found in one sequence (while each of the other sequences show a gap) will have the same bit score and column height as a base that is conserved across every sequence. Gene Slider provides two methods for unmasking this information. First, we have drawn a horizontal bar across each base to indicate how many sequences are contributing to that base’s bit score. An example of this can be seen in Figure 1 where positions 534539 only have one species with a base in that column. An alternate method for displaying this information involves manipulating the saturation level of each column’s color. This is demonstrated in Figure 2 (a zoomed out view of Figure 1) where a large insertion point upstream of the highlighted motif and two small insertions downstream are quickly identifiable thanks to our preattentive ability to quickly recognize subtle changes in luminance (Healey and Enns 2012). </p>
+
+                          <figure style="margin-bottom:20px;">
+                          <img src="http://bar.utoronto.ca/~jwaese/GeneSlider/images/Figure2.png" style="width:100%;">
+                          <figcaption>Fig. 2. The motif AAACA is highlighted after creating a sequence logo description of the query using the visual search panel.</figcaption>
+                          </figure>
+
+                          <p> A second method for unmasking this problem is by creating a new logotype convention we call a “Weighted Shannon” that factors the number of sequences contributing to the bit score of any given position into the calculation of that position’s height. This is different from the KullbackLeibler, Weighted KullbackLeibler, probability weighted KullbackLeibler and PSSMlogos that can be generated with Seq2Logo (Thomsen and Nielsen 2012) to display amino acid depletion with various methods on the negative yaxis. The Weighted Shannon is calculated by simply multiplying the Shannon bit score with the number of residues in that column divided by the total number of sequences in the alignment. This produces a logotype that is similar to the convention but XXXXXX Nick?</p>
+
+                          <p>Gene Slider was written in Processing.js and runs in most web browsers. It can display an unlimited number of sequences of any length, however performance decreases as the sequence length goes up. Most contemporary laptops can display sequences up to 3000 bases long without lagging. Data can be loaded directly from the users’ hard drive, however CNS data can be loaded by using ADAMA adaptor which GETS data from a RESTful webservice on the BAR.</p>
+
+                          <p>To demonstrate the visualization efficiency and effectiveness of Gene Slider, we present two data sets XXXXXXX Nick?? Lorem ipsum……..</p>
+                      </div>        
+                  </div>
+              </div>
+          </div>
+
+
+          <!-- ///////////////////////////////////////////////////////////////////// -->
+          <!-- Contact Modal -->
+          <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="Contact button" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                      <h2 class="modal-title" id="myModalLabel">Contact</h2>
+                      </div>
+                      <div class="modal-body">
+                          <p>Gene Slider was written by Jamie Waese, Asher Pasha, David Guttman and Nicholas Provart at the Department of Cell and Systems Biology, University of Toronto.</p>
+                          
+                          <p>For more information, please contact: <a href="mailto:jamie.waese@mail.utoronto.ca">jamie.waese@mail.utoronto.ca</a></p>
+                      </div>        
+                  </div>
+              </div>
+          </div>
+
+
+
 </div>
