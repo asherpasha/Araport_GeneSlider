@@ -32,6 +32,56 @@ var jsonClone;	// This will have data for gff
 		}
 	}
 
+	// Load jQuery-UI
+	function loadUI() {
+		var allScripts, i, uiCore, uiWidget, uiAccordion, uiCss, re, el;
+
+		// Load the dependances: The new way. Thanks for AIP staff for this
+		allScripts = document.querySelectorAll( 'script' );
+		re = /^(.*)(\/jquery-ui[^\/]*)\/(.*)core\.js??(.*)?$/;
+		for ( i = 0; i < allScripts.length && ! uiCore; i++ ) {
+			if ( re.test( allScripts[i].src ) ) {
+				var match = re.exec( allScripts[i].src );
+				uiCore = match[1] + match[2] + '/ui/core.js';
+				uiWidget = match[1] + match[2] + '/ui/widget.js';
+				uiAccordion = match[1] + match[2] + '/ui/accordion.js';
+				uiCss = match[i] + match[2] + '/themes/smoothness/jquery-ui.min.css';
+			}
+		}
+		
+		// Add core.js
+		if ( uiCore ) {
+			el = document.createElement( 'script' );
+			el.src = uiCore;
+			el.type = 'text/javascript';
+			document.body.appendChild( el );
+		}
+
+		// Add widget.js
+		if ( uiWidget ) {
+			el = document.createElement( 'script' );
+			el.src = uiWidget;
+			el.type = 'text/javascript';
+			document.body.appendChild( el );
+		}
+
+		// Add Accordion.js
+		if ( uiAccordion ) {
+			el = document.createElement( 'script' );
+			el.src = uiAccordion;
+			el.type = 'text/javascript';
+			document.body.appendChild( el );
+		}
+
+		// Add CSS
+		if ( uiCss ) {
+			el = document.createElement( 'link' );
+			el.href = uiAccordion;
+			el.rel = 'stylesheet';
+			document.body.appendChild( el );
+		}
+	}
+
 	// This function check the validity of the fasta file.
 	// then be analized in JavaScript or Processing.
 	function checkFastaSeq(fileData) {
@@ -246,17 +296,47 @@ var jsonClone;	// This will have data for gff
 		var weightedBitscore = 'true';
 		var alnIndicator = 'true';
 
-		// Load AGI
+		// Load AGI if ready and AGI is valid
 		if (ready) {
-			agiLoader(agi, parseInt(before, 10), parseInt(after, 10), parseInt(zoomFrom, 10), parseInt(zoomTo, 10), weightedBitscore, alnIndicator);
+			var regex = /^([Aa][Tt][12345CM][Gg][0-9]{5})$|^([0-9]{6}(_[xsfi])?_at)$|^([0-9]{6,9})$/;
+
+			// In valid format
+			if (!(regex.test(agi))) {
+				window.alert('Incorrect locus format');
+			} 
+
+			var query = {
+				identifier: agi
+			};
+
+			window.Agave.api.adama.search({
+				'namespace':'asher', 'service':'araport_geneslider_checkalias_v0.1.0', 'queryParams': query
+			}, function(response) {
+				if (response.status !== 200) {
+					window.alert('Error in backend webservice!');
+				}
+
+				// Check for error from webservice
+				if (response.obj.status === 'failed') {
+					window.alert('An error returned by webservice!');
+				}
+
+				if (response.obj.result === 1) {
+					agiLoader(agi, parseInt(before, 10), parseInt(after, 10), parseInt(zoomFrom, 10), parseInt(zoomTo, 10), weightedBitscore, alnIndicator);
+				} else {
+					window.alert('Locus is not found in the BAR databases.');
+				}
+			});
 		} else {
 			window.alert('Agave not ready. Please try again.');
 		}
 	}
 
-
 	// Run the script
 	loadPDE();
+
+	// Load jQuery-UI
+	loadUI();
 
 	// Bind
 	bindjs();
@@ -308,6 +388,16 @@ var jsonClone;	// This will have data for gff
 				if ($('#araport-geneslider-user_agi').val()) {
 					after = after + 1000;
 					$('#araport-geneslider-go').click();
+				}
+			});
+
+			// AGI auto complete
+			$('#araport-geneslider-user_agi').autocomplete({
+				source: 'http://bar.utoronto.ca/webservices/araport/geneslider/getAlias.cgi',
+				minLength: 2,
+				select: function(event, ui) {
+					$('#araport-geneslider-user_agi').val(ui.item.label);
+					$('#araport-geneslider-user_agi').val(ui.item.id);
 				}
 			});
 		});
