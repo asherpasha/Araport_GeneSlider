@@ -332,6 +332,31 @@ var jsonClone;	// This will have data for gff
 		}
 	}
 
+	// Function to fill in autocomplete
+	function getAgi(query, callback) {
+		var agaveQuery = {
+			term : query
+		};
+
+		window.Agave.api.adama.search({
+			'namespace':'asher', 'service':'araport_geneslider_getalias_v0.1.0', 'queryParams': agaveQuery
+		}, function(response) {
+			
+			if (response.status !== 200) {
+				window.alert('Error in backend webservice!');
+				return;
+			}
+
+			// Check for error from webservice
+			if (response.obj.status === 'failed') {
+				window.alert('An error returned by webservice!');
+				return;
+			}
+			
+			callback(response.obj.result);
+		});
+	}
+
 	// Run the script
 	loadPDE();
 
@@ -393,7 +418,9 @@ var jsonClone;	// This will have data for gff
 
 			// AGI auto complete
 			$('#araport-geneslider-user_agi').autocomplete({
-				source: 'http://bar.utoronto.ca/webservices/araport/geneslider/getAlias.cgi',
+				source: function(request, callback) {
+					getAgi(request.term, callback);
+				},
 				minLength: 2,
 				select: function(event, ui) {
 					$('#araport-geneslider-user_agi').val(ui.item.label);
@@ -403,3 +430,4 @@ var jsonClone;	// This will have data for gff
 		});
 	});
 })(window, jQuery, Processing);
+
