@@ -38,7 +38,7 @@ var jsonClone;	// This will have data for gff
 
 		// Load the dependances: The new way. Thanks for AIP staff for this
 		allScripts = document.querySelectorAll( 'script' );
-		re = /^(.*)(\/jquery-ui[^\/]*)\/(.*)core\.js??(.*)?$/;
+		re = /^(.*)(\/jquery-ui_1[^\/]*)\/(.*)jquery-ui\.js??(.*)?$/;
 		for ( i = 0; i < allScripts.length && ! uiCore; i++ ) {
 			if ( re.test( allScripts[i].src ) ) {
 				var match = re.exec( allScripts[i].src );
@@ -76,7 +76,7 @@ var jsonClone;	// This will have data for gff
 		// Add CSS
 		if ( uiCss ) {
 			el = document.createElement( 'link' );
-			el.href = uiAccordion;
+			el.href = uiCss;
 			el.rel = 'stylesheet';
 			document.body.appendChild( el );
 		}
