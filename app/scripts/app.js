@@ -237,7 +237,7 @@ var jsonClone;	// This will have data for gff
 				/*jshint validthis:true */
 				pjs.bindJavascript(this);
 				bound = true;
-
+				pjs.setWelcome();
 				addData();
 			}
 			if (!bound) {
