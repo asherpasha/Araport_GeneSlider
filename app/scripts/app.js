@@ -335,7 +335,7 @@ var jsonClone;	// This will have data for gff
 	// Function to fill in autocomplete
 	function getAgi(query, callback) {
 		var agaveQuery = {
-			term : query
+			indentifier : query
 		};
 
 		window.Agave.api.adama.search({
