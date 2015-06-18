@@ -2,7 +2,7 @@
   "name": "araport-geneslider",
   "private": true,
   "dependencies": {
-    "GeneSlider_Bower_Package": "https://github.com/asherpasha/GeneSlider_Bower_Package.git#v0.1.6",
+    "GeneSlider_Bower_Package": "https://github.com/asherpasha/GeneSlider_Bower_Package.git#v0.1.7",
     "processing": "~1.4.13",
     "jquery-ui": "~1.11.4"
   }

@@ -327,6 +327,7 @@ var jsonClone;	// This will have data for gff
 					window.alert('Locus is not found in the BAR databases.');
 				}
 			});
+			$('#araport-geneslider-title').hide();
 		} else {
 			window.alert('Agave not ready. Please try again.');
 		}
@@ -373,14 +374,14 @@ var jsonClone;	// This will have data for gff
 			$(document).on('click', '#araport-geneslider-go', loadDataFromGoButton);
 
 			// Downstream slider
-			$('#araport-geneslider-afterSlider').change(function() {
+			$('#araport-geneslider-afterSlider').on('input', function() {
 				var newVal = this.value;
 		    	document.getElementById('araport-geneslider-afterlabel').innerHTML='After ('+newVal+')';
 				after = Math.abs(newVal);
 			});
 
 			// Upstream slider
-			$('#araport-geneslider-beforeSlider').change(function() {
+			$('#araport-geneslider-beforeSlider').on('input', function() {
 				var newVal = this.value;
 		    	document.getElementById('araport-geneslider-beforelabel').innerHTML='Before ('+newVal+')';
 				before = Math.abs(newVal);		
