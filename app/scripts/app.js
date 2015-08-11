@@ -376,14 +376,14 @@ var jsonClone;	// This will have data for gff
 			// Downstream slider
 			$('#araport-geneslider-afterSlider').on('input', function() {
 				var newVal = this.value;
-		    	document.getElementById('araport-geneslider-afterlabel').innerHTML='After ('+newVal+')';
+		    	document.getElementById('araport-geneslider-afterlabel').innerHTML='Downstream ('+newVal+')';
 				after = Math.abs(newVal);
 			});
 
 			// Upstream slider
 			$('#araport-geneslider-beforeSlider').on('input', function() {
 				var newVal = this.value;
-		    	document.getElementById('araport-geneslider-beforelabel').innerHTML='Before ('+newVal+')';
+		    	document.getElementById('araport-geneslider-beforelabel').innerHTML='Upstream ('+newVal+')';
 				before = Math.abs(newVal);		
 			});
 
