@@ -1,50 +1,26 @@
-# Araport_GeneSlider
+# BAR Gene Slider
 
-An [AIP](http://www.araport.org) Science App created using [Yeoman](http://yeoman.io)
-and the [AIP science app generator](https://www.npmjs.org/package/generator-aip-science-app).
+This is the Gene Slider from the BAR developed for the Araport project. This was developed by the BAR team with help from Araport team.
 
-## App Code
+## Versions
+0.0.27 <br />
+0.0.26 - currently live on Araport <br />
 
-Your application code is in the `app/` subdirectory:
+## How to run on your computer
+1. Install all dependencies (Grunt, Node.js, Bower) as specified in the Araport tutorial on https://www.araport.org/docs/science-apps 
+2. Clone the latest developmental release (may have bugs): <br />
+```git clone https://github.com/asherpasha/Araport_GeneSlider.git``` <br /> 
+```cd Araport_GeneSlider``` <br />
+3. Prepare: <br />
+```npm install```  <br />
+```bower install``` <br />
+4. To run on desktop, comment out (or delete) only the first and the sixth lines of app/app.html. <br />
+5. Run: <br />
+```grunt ```
+5. Sign in using Araport credentials
+6. Test run with any AGI ID such as: At1g01010 
 
-```
-.
-+-- app/
-|   +-- app.html
-|   +-- scripts/
-|       +-- app.js
-|   +-- styles/
-|       +-- app.css
+## Funding Acknowledgement
 
-```
+Genome Canada
 
-## Development
-
-You can interactively develop your app using the built-in test runner. Simply
-execute this command from within the base directory of your app:
-
-```bash
-$ grunt
-```
-
-This will run your application on a local server at
-[http://localhost:9000](http://localhost:9000). It will also watch your
-app code for changes and automatically reload the browser when it detects
-changes.
-
-You can also run the test runner app in "production" mode with the command:
-
-```bash
-$ grunt serve:dist
-```
-
-This will start the same server, but without source code monitoring (live reload)
-and will also permit connections from outside, for example if you wanted to host
-the app yourself on a publicly accessible server.
-
-## Deployment
-
-When you are ready you can upload your application to the
-[AIP Science Apps Workspace](http://www.araport.org/apps).
-
-** More details coming soon! **
