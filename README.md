@@ -3,8 +3,7 @@
 This is the Gene Slider from the BAR developed for the Araport project. This was developed by the BAR team with help from Araport team.
 
 ## Versions
-0.0.27 <br />
-0.0.26 - currently live on Araport <br />
+0.0.27 - currently live on Araport <br />
 
 ## How to run on your computer
 1. Install all dependencies (Grunt, Node.js, Bower) as specified in the Araport tutorial on https://www.araport.org/docs/science-apps 
