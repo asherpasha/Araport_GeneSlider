@@ -3,6 +3,7 @@
 This is the Gene Slider from the BAR developed for the Araport project. This was developed by the BAR team with help from Araport team.
 
 ## Versions
+0.0.28 <br />
 0.0.27 - currently live on Araport <br />
 
 ## How to run on your computer
