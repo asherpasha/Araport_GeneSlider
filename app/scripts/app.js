@@ -196,7 +196,7 @@ var jsonClone;	// This will have data for gff
 					if (response.obj.result.fileData !== '') {
 						pjs.resetData();
 						pjs.setAlnStart(response.obj.result.start);
-						pjs.setSessionData('CNSData', agi, before, after, Bitscore, alnIndicator);
+						pjs.setSessionData('CNSData', agi, before, after, Bitscore, alnIndicator, 'false');
 	
 						// Set the start digit
 						if (zoomFrom < 0) {
@@ -336,7 +336,7 @@ var jsonClone;	// This will have data for gff
 	// Function to fill in autocomplete
 	function getAgi(query, callback) {
 		var agaveQuery = {
-			indentifier : query
+			identifier : query
 		};
 
 		window.Agave.api.adama.search({
