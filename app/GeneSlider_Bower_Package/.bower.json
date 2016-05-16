@@ -1,0 +1,31 @@
+{
+  "name": "GeneSlider_Bower_Package",
+  "version": "0.1.11",
+  "homepage": "https://github.com/asherpasha/GeneSlider_Bower_Package",
+  "authors": [
+    "Asher <asher.pasha@utoronto.ca>"
+  ],
+  "description": "GeneSlider Bower Package for Araport",
+  "main": "geneSlider.js",
+  "keywords": [
+    "Bioinformatics",
+    "Alignments"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "0.1.11",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.1.11",
+    "commit": "0dee1de8db29fe4a0d2628215132eda7a04f9135"
+  },
+  "_source": "https://github.com/asherpasha/GeneSlider_Bower_Package.git",
+  "_target": "v0.1.11",
+  "_originalSource": "https://github.com/asherpasha/GeneSlider_Bower_Package.git"
+}

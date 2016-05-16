@@ -1,6 +1,6 @@
 # BAR Gene Slider
 
-This is the Gene Slider from the BAR developed for the Araport project. This was developed by the BAR team with help from Araport team. This version imports Gene Slider Bower package, that has Gene Slider Processing code. This code is available here: https://github.com/asherpasha/GeneSlider_Bower_Package.git
+This is the Gene Slider from the BAR developed for the Araport project. This was developed by the BAR team with help from Araport team. This version imports Gene Slider Bower package, that has Gene Slider Processing code. This code is available here: https://github.com/asherpasha/GeneSlider_Bower_Package.git . A copy of this package is also available in app directory. <br />
 
 ## Versions
 0.0.28 <br />
