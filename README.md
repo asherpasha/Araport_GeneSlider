@@ -20,6 +20,10 @@ This is the Gene Slider from the BAR developed for the Araport project. This was
 5. Sign in using Araport credentials
 6. Test run with any AGI ID such as: At1g01010 
 
+## License
+
+This software is released under GNU GPLv2 license. Details of the license are listed here: http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html <br />
+
 ## Funding Acknowledgement
 
 Genome Canada
