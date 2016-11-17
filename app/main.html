@@ -1,0 +1,310 @@
+
+<link rel="stylesheet" href="../bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css">
+<script src="../bower_components/jquery-ui/ui/core.js"></script>
+<script src="../bower_components/jquery-ui/ui/widget.js"></script>
+<script src="../bower_components/jquery-ui/ui/accordion.js"></script>
+
+<div class="science-app" data-app-name="araport-geneslider">
+<!-- ///////////////////////////////////////////////////////////////////// -->
+		<!-- Navigation -->
+		<nav class="navbar navbar-inverse navbar-inner" role="navigation">
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header noselect">
+					<a href="http://bar.utoronto.ca"><img src="app/images/BAR.png" class="logo"></a>
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href=".">Gene Slider</a>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav ">
+						<li>
+							<a href="#" data-toggle="modal" data-target="#aboutModal">About</a>
+						</li>
+						<li>
+							<a href="#" data-toggle="modal" data-target="#contactModal">Contact</a>
+						</li>
+					</ul>
+					<!-- Load FASTA File button -->
+					<div class="input-group" id="fileUploadButton" style="display: inline-flex; margin:7px; float:right;">
+						<span class="input-group-btn" style="min-width:85px;">
+						<span class="btn btn-success btn-file">
+						Select file<input type="file" onchange="readFile(this);" >
+						</span>
+						</span>
+						<input type="text" id="fileNameWindow" class="form-control" style="width:200px;" placeholder="Upload a FASTA alignment" readonly>
+					</div>
+
+					<!-- Load GFF File button -->
+					<div class="input-group" id="gffUploadButton" style="display: none; visibility: hidden; margin:7px; float:right;">
+						<span class="input-group-btn" style="min-width:85px;">
+						<span class="btn btn-success btn-file">
+						Select file<input type="file"  onchange="readGFFFile(this);" >
+						</span>
+						</span>
+						<input type="text" id="gffNameWindow" class="form-control" style="width:200px;" placeholder="Upload a GFF file" readonly>
+					</div>
+				</div>
+				<!-- /.navbar-collapse -->
+			</div>
+			<!-- /.container -->
+		</nav>
+		<!-- ///////////////////////////////////////////////////////////////////// -->
+		<!-- Main Window -->
+		<div class="mainWindow">
+			<div class="container">
+	
+				<!-- ///////////////////////////////////////////////////////////////////// -->
+				<!-- INPUT PAGE -->
+				<div id="inputPage" class="text-center" style="margin-top:85px;">
+
+					<!-- Select an Arabidopsis gene by locus section -->
+					<!-- Heading -->
+					<div class="row col-lg-12">
+						<span class="col-lg-2"></span>
+						<span class="col-lg-8">
+							<h1>Select an <i>Arabidopsis</i> gene to view conserved regions across species:</h1>
+						</span>
+						<span class="col-lg-2"></span>
+					</div>
+					<!-- Input Boxes -->
+					<div class="row">
+						<!-- left col -->
+						<div class="col-md-2"></div>
+						<!-- center col -->
+						<div class="col-md-8">
+							<div class="row">
+								<!-- Upstream Text box  -->
+								<div class="col-sm-4">
+									<div class="col-sm-12 text-center">
+										<label>Bases Upstream</label>
+									</div>
+									<div class="row">
+										<input class="form-control" id="bpBefore" type="text" placeholder="0" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>     	
+									</div>
+								</div>
+								<!-- Locus Text box -->
+								<div class="col-sm-4">
+									<label class="control-label">Locus</label>
+									<div class="row">
+										<input class="form-control ui-autocomplete-input" style="margin-left:5px;margin-right:5px;" type="text" id="user_agi" placeholder="Enter an AGI ID here" >
+									</div>
+								</div>
+								<!-- Downstream Text box  -->
+								<div class="col-sm-4">
+									<div class="col-sm-12 text-center">
+										<label>Bases Downstream</label>
+									</div>
+									<div class="col-sm-12">
+										<div class="row" style="display: flex;">
+											<input class="form-control" id="bpAfter" type="text" placeholder="0" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+											<!-- Go button -->
+											<span class="btn btn-success btn-file" style="margin-left: 5px;" onclick="GObutton_selectByGene();">Go</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Example buttons -->
+							<div class="row" style="margin-top:10px;margin-bottom:5px;">
+								<!-- Example 1 -->
+								<a href='?datasource=CNSData&cistome=false&agi=at3g23220&before=180&after=100&zoom_from=54&zoom_to=112&weightedBitscore=true&alnIndicator=true' type="button" class="btn btn-xs btn-default" onclick="goToOutputPage()">Example 1</a>
+								<!-- Example 2 -->
+								<a href='?datasource=CNSData&cistome=false&agi=at1g75717&before=200&after=200&zoom_from=54&zoom_to=128&weightedBitscore=true&alnIndicator=true' type="button" class="btn btn-xs btn-default" onclick="goToOutputPage()">Example 2</a>
+								<!-- Example 3 -->
+								<a href='?datasource=CNSData&cistome=false&agi=at2g19320&before=250&after=125&zoom_from=57&zoom_to=138&weightedBitscore=true&alnIndicator=true' type="button" class="btn btn-xs btn-default" onclick="goToOutputPage()">Example 3</a>
+							</div>
+						</div>
+					</div>
+				
+
+					<!-- /////////////////////////////////  -->
+					<!-- Select an Arabidopsis gene by locus section -->
+				
+					<!-- Heading -->
+					<div class="row col-lg-12" style="margin-top:30px">
+						<span class="col-lg-2"></span>
+						<span class="col-lg-8">
+							<h1>Or load an <i>Arabidopsis</i> alignment by chromosomal region:</h1>
+						</span>
+						<span class="col-lg-2"></span>
+					</div>
+					<!-- Input Boxes -->
+					<div class="row">
+						<!-- left col -->
+						<div class="col-md-2"></div>
+						<!-- center col -->
+						<div class="col-md-8">
+							<div class="row">
+								<!-- Chromosome Text box  -->
+								<div class="col-sm-4">
+									<div class="col-sm-12 text-center">
+										<label for="bpChr">Chromosome</label>
+									</div>
+									<div class="row">
+										<select class="form-control" id="bpChr">
+									        <option>1</option>
+									        <option>2</option>
+									        <option>3</option>
+									        <option>4</option>
+									        <option>5</option>
+									    </select>
+									</div>
+								</div>
+								<!-- Start Text box -->
+								<div class="col-sm-4">
+									<label class="control-label">Start</label>
+									<div class="row">
+										<input class="form-control" type="text" id="bpStart" style="margin-left:5px;margin-right:5px;" placeholder="0" onkeypress='return event.charCode >= 48 && event.charCode <= 57''>
+									</div>
+								</div>
+								<!-- End Text box  -->
+								<div class="col-sm-4">
+									<div class="col-sm-12 text-center">
+										<label>End</label>
+									</div>
+									<div class="col-sm-12">
+										<div class="row" style="display: flex;">
+											<input class="form-control" id="bpEnd" type="text" placeholder="0" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+										<!-- Go button -->
+										<span class="btn btn-success btn-file" style="margin-left: 5px;" onclick="GObutton_selectByRegion();">Go</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Example buttons -->
+							<div class="row" style="margin-top:10px;margin-bottom:5px;">
+								<!-- Example 1 -->
+								<a href='?datasource=CNSData&chr=1&start=3120&end=5000' class="btn btn-xs btn-default" onclick="goToOutputPage()">Example 1</a>
+								<!-- Example 2 -->
+								<a href='?datasource=CNSData&chr=3&start=13120&end=14800' type="button" class="btn btn-xs btn-default" onclick="goToOutputPage()">Example 2</a>
+								<!-- Example 3 -->
+								<a href='?datasource=CNSData&chr=5&start=1120&end=3800' type="button" class="btn btn-xs btn-default" onclick="goToOutputPage()">Example 3</a>
+							</div>
+						</div>
+					</div>
+	
+					<!-- Return to output screen -->
+					<div id="returnToOutputScreenButton" style="display:none; margin-top:60px">
+						<div class="col-lg-12 text-center">
+							<button class="btn btn-default" onclick="goToOutputPage();">Go Back To Previous Output Screen</button> 
+						</div>
+					</div>
+
+				</div>
+				<!-- end of Input Page -->
+
+
+				<!-- ///////////////////////////////////////////////////////////////////// -->
+				<!-- OUTPUT PAGE -->
+				<div id="outputPage" style="margin-top:85px;display:none">
+					<!-- buttons at top of page -->
+					<div class="col-md-12" id="upstreamDownstreamButtons">
+						<!-- Get 1000 bases before data -->
+						<div class="col-md-4 text-left">
+							<button class="btn btn-default" onclick="goUpstream();">Get 1000 Bases Upstream</button> 
+						</div>
+						<div class="col-md-4 text-center">
+							<button class="btn btn-default" onclick="backToInputPage();">Go Back To Input Screen</button>
+						</div>
+						<!-- Get 1000 bases after data -->
+						<div class="col-md-4 text-right">
+							<button class="btn btn-default" onclick="goDownstream();">Get 1000 Bases Downstream</button>               
+						</div>
+					</div>
+
+					<!-- Processing.js GeneSlider.pde sketch goes here -->
+					<div class="col-md-12 text-center">
+						<div style="margin-top:15px">    
+  							<canvas id="araport-geneslider-canvas" data-processing-sources="../bower_components/GeneSlider_Bower_Package/GeneSlider.pde"></canvas>	
+							<noscript>
+								<p>JavaScript is required to view the contents of this page.</p>
+							</noscript>
+						</div>
+					</div>
+					<div class="row" style="float: none; margin: 0 auto; text-align: center" id="Downloads"></div>
+
+				</div>
+
+			<!-- end of container -->
+			</div>
+
+
+		<!-- end of main window -->
+		</div>
+
+
+		<!-- ///////////////////////////////////////////////////////////////////// -->
+		<!-- About Modal -->
+		<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="About button" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+						<h2 class="modal-title" id="myModalLabel">About</h2>
+					</div>
+					<div class="modal-body" id="aboutBody">
+						<script>
+							$('#aboutBody').load('app/about.html');							
+						</script>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- ///////////////////////////////////////////////////////////////////// -->
+		<!-- Contact Modal -->
+		<div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="Contact button" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+						<h2 class="modal-title" id="myModalLabel">Contact</h2>
+					</div>
+					<div class="modal-body">
+						<p>Gene Slider was written by Jamie Waese, Asher Pasha, Tingting Wang, Anna van Weringh, David Guttman and Nicholas Provart at the Department of Cell and Systems Biology, University of Toronto.</p>
+						<p>For more information, please contact: <a href="mailto:jamie.waese@mail.utoronto.ca">Jamie Waese</a> and <a href="mailto:nicholas.provart@utoronto.ca">Nicholas Provart</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- ///////////////////////////////////////////////////////////////////// -->
+		<!-- View Data Modal -->
+		<div class="modal fade" id="viewDataModal" tabindex="-1" role="dialog" aria-labelledby="View Data button" >
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+						<h2 class="modal-title" id="viewDataModalLabel">FASTA File</h2>
+					</div>
+					<div id="viewDataModalBody" class="modal-body">
+						<p>You need to load some data first!</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- ///////////////////////////////////////////////////////////////////// -->
+		<!-- You need to load data first Modal -->
+		<div class="modal fade" id="oopsModal" tabindex="-1" role="dialog" aria-labelledby="Go button" >
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+						<h2 class="modal-title" id="viewDataModalLabel">Oops!</h2>
+					</div>
+					<div id="viewDataModalBody" class="modal-body">
+						<p>You need to select a gene or chromosome region first!</p>
+					</div>
+				</div>
+			</div>
+		</div>		
+
+</div>

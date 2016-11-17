@@ -1,0 +1,109 @@
+/* ┌─────────────────────────────────────────────────────────────────────┐ \\
+// │ Gene Slider                                                         │ \\
+// │ A sequence logo interactive display for education and research      │ \\
+// ├─────────────────────────────────────────────────────────────────────┤ \\
+// │ CSS Style Sheet                                                     │ \\
+// ├─────────────────────────────────────────────────────────────────────┤ \\
+// │ Copyright (c) 2015                                                  │ \\
+// │ by Jamie Waese, Asher Pasha, David Guttman and Nicholas Provart     │ \\
+// │ University of Toronto                                               │ \\
+*/ └─────────────────────────────────────────────────────────────────────┘ \\
+
+
+/*---------------------------------------------------------------------*/
+/* Bootstrap override settings */
+
+.greyText {
+	color:#444;
+  text-shadow: none !important;
+}
+
+.modal-body {
+  overflow-wrap: break-word;
+}
+
+.modal-open {
+    overflow: auto !important;
+    padding-right:0px !important;
+}
+
+.btn-success {
+	background-color: #99cc00;
+	border-color: #99cc00;
+}
+
+.navbar-inverse {
+  background-color: #444444;
+}
+
+
+/*---------------------------------------------------------------------*/
+/* Main page */
+.logo {
+	float: left;
+	width: 37px;
+	margin-right: 35px;
+	margin-top: 5px;
+	margin-left: 5px;
+}
+
+.sectionTitle {
+    text-align: center;
+}
+
+.noselect {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        outline: none;
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0); /* mobile webkit */
+}
+
+label {
+  font-weight: normal;
+}
+
+canvas {
+    padding: 0;
+    margin: auto;
+    display: block;
+}
+
+/*---------------------------------------------------------------------*/
+/* File input button from: http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/ */
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  background: red;
+  cursor: inherit;
+  display: block;
+}
+
+input[readonly] {
+  background-color: white !important;
+  cursor: text !important;
+}
+
+canvas { 
+	display: block; 
+	outline: 0px; 
+	margin-bottom: 1.5em;  
+	background: url(loading.png);
+	background-repeat: no-repeat;
+	background-position:center center;
+}
+

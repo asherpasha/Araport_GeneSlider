@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--
+// ┌─────────────────────────────────────────────────────────────────────┐ \\
+// │ Gene Slider                                                         │ \\
+// │ A sequence logo interactive display for education and research      │ \\
+// ├─────────────────────────────────────────────────────────────────────┤ \\
+// │ About Page                                                          │ \\
+// ├─────────────────────────────────────────────────────────────────────┤ \\
+// │ Copyright (c) 2015                                                  │ \\
+// │ by Jamie Waese, Asher Pasha, David Guttman and Nicholas Provart     │ \\
+// │ University of Toronto                                               │ \\
+// └─────────────────────────────────────────────────────────────────────┘ \\
+-->
+
+<html lang="en">
+
+<head>
+</head>
+<body>
+	<p>Gene Slider helps visualize the conservation and entropy of orthologous DNA and protein sequences by presenting them as one long sequence logo that can be zoomed in and out of, from an overview of the entire sequence down to just a few residues at a time. A search function enables users to find motifs such as <i>cis</i>-elements in promoter regions by simply “drawing” a sequence logo representation of the desired motif as a query. In addition to displaying usersupplied FASTA files, our demonstration version of Gene Slider loads and displays a rich database of 90,000+ conserved non-coding regions across the Brassicaceae indexed to the TAIR10 Col-0 <i>Arabidopsis thaliana</i> sequence. It also displays transcription factor binding sites, enabling easy identification of regions that are both conserved across multiple species and may contain transcription factor binding sites.</p>
+
+
+
+	<figure style="margin-bottom:20px;">
+	<img src="app/images/Figure1.png" style="width:100%;">
+	<figcaption>The motif AAACA is highlighted according to the query in the search panel. The horizontal bar superimposed over each column represents the number of sequences with a residue at that position.</figcaption>
+	</figure>
+	<h4>Web Services</h4>
+	<p>To demonstrate Gene Slider, we have pre-processed 90,000+ conserved non-coding regions across the Brassicaceae (Haudry et al., 2013), indexed to the TAIR10 Col-0 Arabidopsis thaliana sequence, for easy identification of regions that are conserved across multiple species. Further, we have mapped transcription factor binding sites from the JASPAR database (Mathelier et al., 2014) and from Weirauch et al. (2014) to the TAIR10 genome sequence using FIMO (Grant et al., 2011) to permit the identification of regions that are both conserved and may contain transcription factor binding sites. This data can be accessed directly as a web service:</p>
+	<p><a href="http://bar.utoronto.ca/geneslider/cgi-bin/alignmentByAgi.cgi?agi=At3g24650&before=1000&after=1000" target="_blank">http://bar.utoronto.ca/geneslider/cgi-bin/alignmentByAgi.cgi?agi=At3g24650&before=1000&after=1000</a></p>
+	<p>Simply adjust the AGI ID ("agi=") and however many bases upstream ("before=") or downstream ("after=") of the gene you wish to load. The web service returns a JSON object that contains FASTA formatted data.</p>
+</body>
+</html>
