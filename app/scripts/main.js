@@ -69,12 +69,6 @@ function backToInputPage() {
 
 }
 
-// BEFORE WE LOAD THE PAGE...
-// Check if there are search parameters in the URL on load. If so, hide input screen & show output screen
-if (window.location.search != "") {
-	goToOutputPage();
-}
-
 // Functions
 // Bind processing
 function bindjs() {
@@ -680,8 +674,6 @@ function hideCarousel() {
     $('#upstreamDownstreamButtons').css('display','block')
 }
 
-var before = 0;
-var after = 0;
 // Get data using AGI
 function loadAGIDataFromGoButton() {
 	var before;
@@ -821,10 +813,7 @@ function downloadSequences() {
 //////////////////////////////////////////////////////////////////////////////// 
 // Main
 
-bindjs();
-
-
-(function(window, $, Processing, undefined) {
+(function(window, $, undefined) {
 
 	// Functions
 	// Load the GeneSlider pde file
@@ -924,7 +913,8 @@ bindjs();
 		ready = true;	// Agave ready
 		$(document).ready(function() {
 			// Agave and jQuery are ready
+			backToInputPage();
 		});
 	});
-})(window, jQuery, Processing);
+})(window, jQuery);
 
