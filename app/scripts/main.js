@@ -72,7 +72,7 @@ function backToInputPage() {
 // Functions
 // Bind processing
 function bindjs() {
-	pjs = Processing.getInstanceById('GeneSlider');
+	pjs = Processing.getInstanceById('araport-geneslider-canvas');
 	if (pjs != null) {
 		pjs.bindJavascript(this);
 		bound = true;
@@ -550,7 +550,7 @@ function alignmentLoader(chr, start, end, zoomFrom, zoomTo, Bitscore, alnIndicat
 	 // first, hide the carousel
 	 hideCarousel(); 
 	function bind() {
-		pjs = Processing.getInstanceById('GeneSlider');
+		pjs = Processing.getInstanceById('araport-geneslider-canvas');
 	
 		if (pjs != null) {
 			pjs.bindJavascript(this);
