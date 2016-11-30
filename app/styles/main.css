@@ -102,7 +102,7 @@ canvas {
 	display: block; 
 	outline: 0px; 
 	margin-bottom: 1.5em;  
-	background: url(loading.png);
+	background: url(../images/loading.png);
 	background-repeat: no-repeat;
 	background-position:center center;
 }

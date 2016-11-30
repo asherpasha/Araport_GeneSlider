@@ -12,6 +12,8 @@ var alignment = '';	// The entire alignment
 var alnStart = 0; // Start of alignment
 var alnEnd = 0;	// End of alignment
 var serviceURL = 'https://api.araport.org/community/v0.3/asher-live/geneslider_v0.0.1/access/'
+var before;
+var after;
 
 ////////////////////////////////////////////////////////////
 /// Misc functions for this page
