@@ -12,8 +12,8 @@ var alignment = '';	// The entire alignment
 var alnStart = 0; // Start of alignment
 var alnEnd = 0;	// End of alignment
 var serviceURL = 'https://api.araport.org/community/v0.3/asher-live/geneslider_v0.0.1/access/'
-var before;
-var after;
+var before = 0;
+var after = 0;
 
 ////////////////////////////////////////////////////////////
 /// Misc functions for this page
@@ -125,14 +125,14 @@ function checkFastaSeq(fileData) {
 
 	// Checks for ">" in the first line first sentence
 	if (!(startPattern.test(fileDataArray[0]))) {
-		alert("This is not a FASTA file.");
+		window.alert("This is not a FASTA file.");
 		$("#fileNameWindow").val("")
 		return false;
 	}
 
 	// Check for number of lines
 	if (fileDataArray.length <= 3) {
-		alert("Atleast 2 seqeunces are needed.");
+		window.alert("Atleast 2 seqeunces are needed.");
 		$("#fileNameWindow").val("")
 		return false;
 	}
@@ -147,28 +147,28 @@ function checkFastaSeq(fileData) {
 			// Get the length of the sequence and check it against the length of first sequence
 			var length = fileDataArray[i].length;
 			if (length != seqLength) {
-				alert("The lengths of the sequences are not equal.");
+				window.alert("The lengths of the sequences are not equal.");
 				$("#fileNameWindow").val("")
 				return false;
 			}
 
 			// Check for digits
 			if (digits.test(fileDataArray[i])) {
-				alert("The sequences should not have digits.");
+				window.alert("The sequences should not have digits.");
 				$("#fileNameWindow").val("")
 				return false;
 			}
 
 			// Check for DNA/Protein Sequence
 			if (seq.test(fileDataArray[i])) {
-				alert("The file has non DNA/Protein sequence.");	
+				window.alert("The file has non DNA/Protein sequence.");	
 				$("#fileNameWindow").val("")
 				return false;
 			}
 
 			// Check for special character
 			if (special.test(fileDataArray[i])) {
-				alert("The sequence should not have special characters.");
+				window.alert("The sequence should not have special characters.");
 				$("#fileNameWindow").val("")
 				return false;
 			}
@@ -494,7 +494,7 @@ function agiLoader(agi, before, after, zoomFrom, zoomTo, Bitscore, alnIndicator,
 					pjs.setWelcome();
 					pjs.resetData();
 					pjs.setAlnStart(data.start);
-					pjs.setSessionData("CNSData", agi, before, after, Bitscore, alnIndicator, cistome);
+					pjs.setSessionData("CNSData", String(agi), before, after, Bitscore, alnIndicator, cistome);
 
 					// Set the start digit
 					if (zoomFrom < 0) {
@@ -636,6 +636,15 @@ function querystring(key) {
 	return r;
 }
 
+// Grap a parameter for a given text url
+function querystringText(url, key) {
+	var re = new RegExp('(?:\\?|&)'+key+'=(.*?)(?=&|$)','gi');
+	var r = [], m;
+	while ((m = re.exec(url)) != null) r[r.length] = m[1];
+	return r;
+}
+
+
 // Get Upstreams URL and load it
 function goUpstream() {
 	if (!bound) {
@@ -645,9 +654,15 @@ function goUpstream() {
 	if (pjs != null) {
 		// Get the URL
 		var url = pjs.goUpstream();
-		window.open(url, "_self");
+		// Check if AGI is there, then load AGI, else Load region
+		if (querystringText(url, 'agi').toString() == '') {
+			loadExampleRegion(url);
+		} else {
+			loadExampleLocus(url);
+		}
+		//window.open(url, "_self");
 	} else {
-		alert("Error connecting of PDE file.");
+		window.alert("Error connecting to PDE file.");
 	}
 }
 
@@ -660,9 +675,14 @@ function goDownstream() {
 	if (pjs != null) {
 		// Get the URL
 		var url = pjs.goDownstream();
-		window.open(url, "_self");
+		if (querystringText(url, 'agi').toString() == '') {
+			loadExampleRegion(url);
+		} else {
+			loadExampleLocus(url);
+		}
+
 	} else {
-		alert("Error connecting of PDE file.");
+		window.alert("Error connecting of PDE file.");
 	}
 }
 
@@ -707,8 +727,10 @@ function loadAGIDataFromGoButton() {
 	// Load AGI's in GeneSlider
 	agiLoader(agi, parseInt(before, 10), parseInt(after, 10), parseInt(zoomFrom, 10), parseInt(zoomTo, 10), weightedBitscore, alnIndicator, cistome);
 	$('#topPageText').hide();
-	createButton('Download Alignment');
-	createButton('Download Sequences');
+	if ($('#Downloads').has('input').length == 0) {
+		createButton('Download Alignment');
+		createButton('Download Sequences');
+	}
 }
 
 // Get data using Region
@@ -740,7 +762,12 @@ function loadAlignmentDataFromGoButton() {
 	} else {
 		bpEnd = $('#bpEnd').val();
 	}
-	alignmentLoader(chr, parseInt(bpStart, 10), parseInt(bpEnd, 10), parseInt(bpStart, 10), parseInt(bpEnd, 10), weightedBitscore, alnIndicator, cistome);
+	alignmentLoader(chr, parseInt(bpStart, 10), parseInt(bpEnd, 10), parseInt(bpStart, 10) + 1, parseInt(bpEnd, 10), weightedBitscore, alnIndicator, cistome);
+	$('#topPageText').hide();
+	if ($('#Downloads').has('input').length == 0) {
+		createButton('Download Alignment');
+		createButton('Download Sequences');
+	}
 }
 
 // Create full download button
@@ -758,6 +785,46 @@ function createButton(text) {
 	}
 	$('#Downloads').append(button);
 }
+
+// Load Example Locus
+function loadExampleLocus(text) {
+	var cistome = false;
+	var agi = querystringText(text, 'agi').toString();
+	var before = querystringText(text, 'before').toString();
+	var after = querystringText(text, 'after').toString();
+	var zoomFrom = querystringText(text, 'zoom_from').toString();
+	var zoomTo = querystringText(text, 'zoom_to').toString();
+	var weightedBitscore = querystringText(text, 'weightedBitscore').toString();
+	var alnIndicator = querystringText(text, 'alnIndicator').toString();;
+
+	// Load AGI's in GeneSlider
+	goToOutputPage();
+	agiLoader(agi, parseInt(before, 10), parseInt(after, 10), parseInt(zoomFrom, 10), parseInt(zoomTo, 10), weightedBitscore, alnIndicator, cistome);
+	$('#topPageText').hide();
+	if ($('#Downloads').has('input').length == 0) {
+		createButton('Download Alignment');
+		createButton('Download Sequences');
+	}
+}
+
+// Load Example Region 
+function loadExampleRegion(text) {
+	var cistome = false;
+	var chr = querystringText(text, 'chr');
+	var bpStart = querystringText(text, 'start');
+	var bpEnd = querystringText(text, 'end');
+	var weightedBitscore = true;
+	var alnIndicator = true;
+
+	// Load a Region
+	goToOutputPage();
+	alignmentLoader(parseInt(chr,10), parseInt(bpStart, 10), parseInt(bpEnd, 10), parseInt(bpStart, 10), parseInt(bpEnd, 10), weightedBitscore, alnIndicator, cistome);
+	if ($('#Downloads').has('input').length == 0) {
+		createButton('Download Alignment');
+		createButton('Download Sequences');
+	}
+}
+
 
 // Download function for full alignment
 function downloadFullAlignment() {
@@ -783,7 +850,6 @@ function downloadFullAlignment() {
 	hiddenElement.download = 'alignment.fa';
 	document.body.appendChild(hiddenElement);
 	hiddenElement.click();
-	document.body.returnChild(hiddenElement);
 }
 
 // Download just the sequences

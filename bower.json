@@ -3,7 +3,7 @@
   "private": true,
   "dependencies": {
 	"GeneSlider_Bower_Package": "https://github.com/asherpasha/GeneSlider_Bower_Package.git#v0.1.12",
-    "processing": "1.4.1",
+    "processing": "1.6.3",
     "jquery-ui": "~1.11.4"
   }
 }

@@ -1,7 +1,9 @@
+<!--
 <link rel="stylesheet" href="../bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css">
 <script src="../bower_components/jquery-ui/ui/core.js"></script>
 <script src="../bower_components/jquery-ui/ui/widget.js"></script>
 <script src="../bower_components/jquery-ui/ui/accordion.js"></script>
+-->
 <div class="science-app" data-app-name="araport-geneslider">
 
 <!-- ///////////////////////////////////////////////////////////////////// -->
@@ -111,11 +113,11 @@
 							<!-- Example buttons -->
 							<div class="row" style="margin-top:10px;margin-bottom:5px;">
 								<!-- Example 1 -->
-								<a href='?datasource=CNSData&cistome=false&agi=at3g23220&before=180&after=100&zoom_from=54&zoom_to=112&weightedBitscore=true&alnIndicator=true' type="button" class="btn btn-xs btn-default" onclick="goToOutputPage()">Example 1</a>
+								<span type="button" class="btn btn-xs btn-default" onclick="loadExampleLocus('?datasource=CNSData&cistome=false&agi=at3g23220&before=180&after=100&zoom_from=54&zoom_to=112&weightedBitscore=true&alnIndicator=true');">Example 1</span>
 								<!-- Example 2 -->
-								<a href='?datasource=CNSData&cistome=false&agi=at1g75717&before=200&after=200&zoom_from=54&zoom_to=128&weightedBitscore=true&alnIndicator=true' type="button" class="btn btn-xs btn-default" onclick="goToOutputPage()">Example 2</a>
+								<span type="button" class="btn btn-xs btn-default" onclick="loadExampleLocus('?datasource=CNSData&cistome=false&agi=at1g75717&before=200&after=200&zoom_from=54&zoom_to=128&weightedBitscore=true&alnIndicator=true');">Example 2</span>
 								<!-- Example 3 -->
-								<a href='?datasource=CNSData&cistome=false&agi=at2g19320&before=250&after=125&zoom_from=57&zoom_to=138&weightedBitscore=true&alnIndicator=true' type="button" class="btn btn-xs btn-default" onclick="goToOutputPage()">Example 3</a>
+								<span type="button" class="btn btn-xs btn-default" onclick="loadExampleLocus('?datasource=CNSData&cistome=false&agi=at2g19320&before=250&after=125&zoom_from=57&zoom_to=138&weightedBitscore=true&alnIndicator=true');">Example 3</span>
 							</div>
 						</div>
 					</div>
@@ -178,11 +180,11 @@
 							<!-- Example buttons -->
 							<div class="row" style="margin-top:10px;margin-bottom:5px;">
 								<!-- Example 1 -->
-								<a href='?datasource=CNSData&chr=1&start=3120&end=5000' class="btn btn-xs btn-default" onclick="goToOutputPage()">Example 1</a>
+								<span type="button" class="btn btn-xs btn-default" onclick="loadExampleRegion('?datasource=CNSData&chr=1&start=3120&end=5000');">Example 1</span>
 								<!-- Example 2 -->
-								<a href='?datasource=CNSData&chr=3&start=13120&end=14800' type="button" class="btn btn-xs btn-default" onclick="goToOutputPage()">Example 2</a>
+								<span type="button" class="btn btn-xs btn-default" onclick="loadExampleRegion('?datasource=CNSData&chr=3&start=13120&end=14800');">Example 2</span>
 								<!-- Example 3 -->
-								<a href='?datasource=CNSData&chr=5&start=1120&end=3800' type="button" class="btn btn-xs btn-default" onclick="goToOutputPage()">Example 3</a>
+								<span type="button" class="btn btn-xs btn-default" onclick="loadExampleRegion('?datasource=CNSData&chr=5&start=1120&end=3800');">Example 3</span>
 							</div>
 						</div>
 					</div>
@@ -219,7 +221,7 @@
 					<!-- Processing.js GeneSlider.pde sketch goes here -->
 					<div class="col-md-12 text-center">
 						<div style="margin-top:15px">    
-  							<canvas id="araport-geneslider-canvas" data-processing-sources="../bower_components/GeneSlider_Bower_Package/GeneSlider.pde"></canvas>	
+  							<canvas id="araport-geneslider-canvas"></canvas>	
 							<noscript>
 								<p>JavaScript is required to view the contents of this page.</p>
 							</noscript>
@@ -247,6 +249,15 @@
 						<h2 class="modal-title" id="myModalLabel">About</h2>
 					</div>
 					<div class="modal-body" id="aboutBody">
+						<p>Gene Slider helps visualize the conservation and entropy of orthologous DNA and protein sequences by presenting them as one long sequence logo that can be zoomed in and out of, from an overview of the entire sequence down to just a few residues at a time. A search function enables users to find motifs such as <i>cis</i>-elements in promoter regions by simply “drawing” a sequence logo representation of the desired motif as a query. In addition to displaying usersupplied FASTA files, our demonstration version of Gene Slider loads and displays a rich database of 90,000+ conserved non-coding regions across the Brassicaceae indexed to the TAIR10 Col-0 <i>Arabidopsis thaliana</i> sequence. It also displays transcription factor binding sites, enabling easy identification of regions that are both conserved across multiple species and may contain transcription factor binding sites.</p>
+						<figure style="margin-bottom:20px;">
+						<img src="app/images/Figure1.png" style="width:100%;">
+						<figcaption>The motif AAACA is highlighted according to the query in the search panel. The horizontal bar superimposed over each column represents the number of sequences with a residue at that position.</figcaption>
+						</figure>
+						<h4>Web Services</h4>
+						<p>To demonstrate Gene Slider, we have pre-processed 90,000+ conserved non-coding regions across the Brassicaceae (Haudry et al., 2013), indexed to the TAIR10 Col-0 Arabidopsis thaliana sequence, for easy identification of regions that are conserved across multiple species. Further, we have mapped transcription factor binding sites from the JASPAR database (Mathelier et al., 2014) and from Weirauch et al. (2014) to the TAIR10 genome sequence using FIMO (Grant et al., 2011) to permit the identification of regions that are both conserved and may contain transcription factor binding sites. This data can be accessed directly as a web service:</p>
+						<p><a href="http://bar.utoronto.ca/geneslider/cgi-bin/alignmentByAgi.cgi?agi=At3g24650&before=1000&after=1000" target="_blank">http://bar.utoronto.ca/geneslider/cgi-bin/alignmentByAgi.cgi?agi=At3g24650&before=1000&after=1000</a></p>
+						<p>Simply adjust the AGI ID ("agi=") and however many bases upstream ("before=") or downstream ("after=") of the gene you wish to load. The web service returns a JSON object that contains FASTA formatted data.</p>
 					</div>
 				</div>
 			</div>
