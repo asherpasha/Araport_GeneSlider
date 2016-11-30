@@ -702,9 +702,6 @@ function loadAGIDataFromGoButton() {
 		after = 0;
 	}
 
-	window.alert(agi);
-	window.alert(before);
-	window.alert(after);
 	// Load AGI's in GeneSlider
 	agiLoader(agi, parseInt(before, 10), parseInt(after, 10), parseInt(zoomFrom, 10), parseInt(zoomTo, 10), weightedBitscore, alnIndicator, cistome);
 	$('#topPageText').hide();
@@ -714,28 +711,34 @@ function loadAGIDataFromGoButton() {
 
 // Get data using Region
 function loadAlignmentDataFromGoButton() {
-	var url = "?datasource=CNSData";
-	// Get Chromosome
+	var chr;
+	var bpStart;
+	var bpEnd;
+	var weightedBitscore = true;
+	var alnIndicator = true;
+	var cistome = false;
+
+
 	if ($('#bpChr').val() != '') {
-		url += "&chr=" + $('#bpChr').val();
+		chr = $('#bpChr').val();
 	} else {
-		url += "&chr=1";		
+		chr = 1;
 	}
 
 	// Get Start
 	if ($('#bpStart').val() == '') {
-		url += "&start=3500";
+		bpStart = 3500;
 	} else {
-		url += "&start=" + $('#bpStart').val();
+		bpStart = $('#bpStart').val();
 	}
 
 	// Get End
 	if ($('#bpEnd').val() == '') {
-		url += "&end=6000";
+		bpEnd = 6000;
 	} else {
-		url += "&end=" + $('#bpEnd').val();
+		bpEnd = $('#bpEnd').val();
 	}
-	location.href = url;  // JAMIE: I shut this off because it was reloading the page
+	alignmentLoader(chr, parseInt(bpStart, 10), parseInt(bpEnd, 10), parseInt(bpStart, 10), parseInt(bpEnd, 10), weightedBitscore, alnIndicator, cistome);
 }
 
 // Create full download button
