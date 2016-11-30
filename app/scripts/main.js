@@ -4,6 +4,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 // Global Variables
+var $ = jQuery;
 var pjs;	// Processing js object
 var bound;	// If Processing is bound
 var jsonClone;	// This will have data for gff
