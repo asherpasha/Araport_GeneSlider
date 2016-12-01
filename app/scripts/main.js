@@ -763,7 +763,7 @@ function loadAlignmentDataFromGoButton() {
 	} else {
 		bpEnd = $('#bpEnd').val();
 	}
-	alignmentLoader(chr, parseInt(bpStart, 10), parseInt(bpEnd, 10), parseInt(bpStart, 10) + 1, parseInt(bpEnd, 10), weightedBitscore, alnIndicator, cistome);
+	alignmentLoader(chr, parseInt(bpStart, 10), parseInt(bpEnd, 10), -1, -1, weightedBitscore, alnIndicator, cistome);
 	$('#topPageText').hide();
 	if ($('#Downloads').has('input').length == 0) {
 		createButton('Download Alignment');
@@ -819,7 +819,7 @@ function loadExampleRegion(text) {
 
 	// Load a Region
 	goToOutputPage();
-	alignmentLoader(parseInt(chr,10), parseInt(bpStart, 10), parseInt(bpEnd, 10), parseInt(bpStart, 10), parseInt(bpEnd, 10), weightedBitscore, alnIndicator, cistome);
+	alignmentLoader(parseInt(chr,10), parseInt(bpStart, 10), parseInt(bpEnd, 10), -1, -1, weightedBitscore, alnIndicator, cistome);
 	if ($('#Downloads').has('input').length == 0) {
 		createButton('Download Alignment');
 		createButton('Download Sequences');
